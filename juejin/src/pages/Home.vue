@@ -1,31 +1,44 @@
 <template>
-<div>
-  <div id="content">
-    <div class="title" v-for="(item, index) in urls" :key="index"  @click="setIframe(item)">{{index + 1}} : {{item.title}}</div>
+  <div>
+    <div id="content">
+      <input
+        :value="searchVal"
+        @input="fnSearch"
+      >
+      <div
+        v-for="(item, index) in list"
+        :key="index"
+        class="title"
+        @click="setIframe(item)"
+      >
+        {{ index + 1 }} : {{ item.title }}
+      </div>
+    </div>
+    <div id="wrapper">
+      <iframe
+        id="iframe"
+        ref="iframe"
+        src=""
+        width="100%"
+        height="100%"
+        frameborder="0"
+      />
+    </div>
   </div>
-  <div id="wrapper">
-    <iframe ref="iframe" id="iframe" src="" width="100%" height="100%" frameborder="0"></iframe>
-  </div>
-</div>
-
 </template>
 <script>
 import { reactive, ref, onMounted } from 'vue';
 import {urls} from '@/data/data.js';
 export default {
-  name: "Home",
   props: {},
-  setup(props) {
+  setup() {
     let iframe = ref(null);
     let title = ref(null);
     const data = reactive({
-      list: [
-        {name: '掘金', url: 'https://juejin.im/'},
-        {name: 'sf', url: 'https://juejin.im/'},
-      ]
+      searchVal: '',
+      list: urls,
     })
     onMounted(() => {
-      console.log(data.list);
       iframe.value = document.querySelector('#iframe');
       title.value = document.querySelector('#title');
     });
@@ -33,9 +46,16 @@ export default {
     const setIframe = (item) => {
       iframe.value.contentWindow.location.replace(item.url);
     }
+    const fnSearch = (e) => {
+      console.log(e.target.value);
+      data.searchVal = e.target.value;
+      data.list = urls.filter(item => item.title.includes(data.searchVal));
+      console.log(data.list);
+    }
     return {
-      urls,
-      setIframe
+      ...data,
+      setIframe,
+      fnSearch
     };
   }
 };
