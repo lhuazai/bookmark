@@ -1,9 +1,9 @@
 <script setup>
   import { reactive, ref, onMounted } from 'vue';
   import {urls} from '../src/assets/data.js';
-  const data = reactive({
-    urls
-  })
+  // const data = reactive({
+  //   urls
+  // })
   let iframe = ref(null);
   const setIframe = (item) => {
     iframe.value.contentWindow.location.replace(item.url);
@@ -13,7 +13,7 @@
 <template>
 <div>
   <div id="content">
-    <div class="title" v-for="(item, index) in data.urls" :key="index"  @click="setIframe(item)">{{index + 1}} : {{item.title}}</div>
+    <div class="title" v-for="(item, index) in urls" :key="index"  @click="setIframe(item)">{{index + 1}} : {{item.title}}</div>
   </div>
   <div id="wrapper">
     <iframe ref="iframe" id="iframe" src="" width="100%" height="100%" frameborder="0"></iframe>
