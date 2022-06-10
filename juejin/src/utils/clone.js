@@ -2,7 +2,7 @@
  * @Author: shihuaLiu 
  * @Date: 2021-06-04 15:06:53 
  * @Last Modified by: shihuaLiu
- * @Last Modified time: 2022-03-10 11:17:11
+ * @Last Modified time: 2022-06-10 15:41:48
  */
 const mapTag = '[object Map]';
 const setTag = '[object Set]';
@@ -98,8 +98,7 @@ function cloneOtherType(targe, type) {
     }
 }
 
-function clone(target, map = new WeakMap()) {
-
+export function clone (target, map = new WeakMap()) {
     // 克隆原始类型
     if (!isObject(target)) {
         return target;
@@ -147,7 +146,3 @@ function clone(target, map = new WeakMap()) {
 
     return cloneTarget;
 }
-
-module.exports = {
-    clone
-};

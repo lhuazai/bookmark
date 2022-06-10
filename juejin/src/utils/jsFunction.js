@@ -9,6 +9,7 @@ Function.prototype.myCall = function (context, ...args) {
   delete context[fn];
   return result;
 }
+
 Function.prototype.myApply = function(context, args = []) { // 解构方式
   if(typeof this !== 'function') {
     throw new TypeError(`It's must be a function`)
@@ -20,6 +21,7 @@ Function.prototype.myApply = function(context, args = []) { // 解构方式
   delete context[fn];
   return result;
 }
+
 Function.prototype.myBind = function (context, ...args) {
   const fn = this;
   if(typeof fn !== 'function') {
@@ -30,12 +32,14 @@ Function.prototype.myBind = function (context, ...args) {
     return fn.apply(context, [...args, ...otherArgs]);
   };
 }
-function myNew (context, ...args) {
+
+export function myNew (context, ...args) {
   let obj = new Object();
   obj.__proto__ = context.prototype;
   let res = context.call(obj, ...args);
   return res instanceof Object ? res : obj;
 }
+
 Array.prototype.myReduce = function (arr, callBack, initialVal) {
   if (!Array.isArray(arr) || typeof callBack !== 'function' || arr.length === 0) {
     return [];
@@ -47,7 +51,8 @@ Array.prototype.myReduce = function (arr, callBack, initialVal) {
   }
   return value;
 }
-function debounce (fn, wait) {
+
+export function debounce (fn, wait) {
   let time = null;
   return function () {
     const context = this;
@@ -60,7 +65,8 @@ function debounce (fn, wait) {
     }, wait)
   }
 }
-function  throttle (fn, wait) {
+
+export function  throttle (fn, wait) {
   let last = 0;
   return function () {
     let that = this;
