@@ -2,7 +2,7 @@
   <div>
     <div id="content">
       <input
-        :value="searchVal"
+        v-model="searchVal"
         @input="fnSearch"
       >
       <div
@@ -28,7 +28,7 @@
 </template>
 <script>
 import { reactive, ref, onMounted } from 'vue';
-import {urls} from '@/data/data.js';
+import { urls } from '@/data/data.js';
 export default {
   props: {},
   setup() {
