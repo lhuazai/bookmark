@@ -2,18 +2,18 @@
  * @Author: shihuaLiu 
  * @Date: 2022-06-13 09:30:42 
  * @Last Modified by: shihuaLiu
- * @Last Modified time: 2022-06-13 13:45:59
+ * @Last Modified time: 2022-06-13 17:53:16
  */
 <template>
   <div>
     <div id="content">
       <div>
-        <input v-model="data.searchVal"/>
+        <input v-model="searchVal"/>
         <button @click="fnSearch">搜索</button>
       </div>
       
       <div
-        v-for="(item, index) in data.list"
+        v-for="(item, index) in list"
         :key="index"
         class="title"
         @click="setIframe(item)"
@@ -34,7 +34,7 @@
   </div>
 </template>
 <script>
-import { reactive, ref, onMounted } from 'vue';
+import { reactive, ref, onMounted, toRefs } from 'vue';
 import { urls } from '@/data/data.js';
 export default {
   props: {},
@@ -42,7 +42,7 @@ export default {
     let iframe = ref(null);
     const data = reactive({
       searchVal: '',
-      list: urls.reverse(),
+      list: urls,
     })
     onMounted(() => {
       iframe.value = document.querySelector('#iframe');
@@ -57,7 +57,7 @@ export default {
       });
     }
     return {
-      data,
+      ...toRefs(data),
       setIframe,
       fnSearch
     };
