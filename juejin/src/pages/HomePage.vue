@@ -1,12 +1,19 @@
+/*
+ * @Author: shihuaLiu 
+ * @Date: 2022-06-13 09:30:42 
+ * @Last Modified by: shihuaLiu
+ * @Last Modified time: 2022-06-13 13:45:59
+ */
 <template>
   <div>
     <div id="content">
-      <input
-        v-model="searchVal"
-        @input="fnSearch"
-      >
+      <div>
+        <input v-model="data.searchVal"/>
+        <button @click="fnSearch">搜索</button>
+      </div>
+      
       <div
-        v-for="(item, index) in list"
+        v-for="(item, index) in data.list"
         :key="index"
         class="title"
         @click="setIframe(item)"
@@ -33,27 +40,24 @@ export default {
   props: {},
   setup() {
     let iframe = ref(null);
-    let title = ref(null);
     const data = reactive({
       searchVal: '',
-      list: urls,
+      list: urls.reverse(),
     })
     onMounted(() => {
       iframe.value = document.querySelector('#iframe');
-      title.value = document.querySelector('#title');
     });
 
     const setIframe = (item) => {
       iframe.value.contentWindow.location.replace(item.url);
     }
-    const fnSearch = (e) => {
-      console.log(e.target.value);
-      data.searchVal = e.target.value;
-      data.list = urls.filter(item => item.title.includes(data.searchVal));
-      console.log(data.list);
+    const fnSearch = () => {
+      data.list = urls.filter(item => {
+        return item.title.indexOf(data.searchVal) > -1;
+      });
     }
     return {
-      ...data,
+      data,
       setIframe,
       fnSearch
     };
@@ -68,7 +72,7 @@ export default {
   position: relative;
 }
 #content {
-  width: 20%;
+  width: 18%;
   height: 100vh;
   background-color: #f5f5f5;
   position: absolute;
@@ -76,7 +80,7 @@ export default {
   top: 0;
   overflow: auto;
   text-align: left;
-  padding-left: 8px;
+  padding: 8px;
 }
 #wrapper {
   width: 80%;
