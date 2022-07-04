@@ -11,6 +11,7 @@
     "@babel/polyfill": "^7.12.1",
     "@vitejs/plugin-legacy": "^1.8.2",
     "events": "^3.3.0",
+    "marked": "^4.0.17",
     "vite-babel-plugin": "0.0.2",
     "vue": "^3.2.25",
     "vue-eslint-parser": "^9.0.2",
